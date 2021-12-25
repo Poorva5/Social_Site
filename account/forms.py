@@ -55,4 +55,27 @@ class PostDataForm(forms.ModelForm):
         self.fields['image'].widget.attrs.update({'class': 'form-control-file'})
 
 
+class UpdatePostForm(forms.ModelForm):
+    class Meta:
+        model = PostData
+        fields = ['title', 'image', 'content']
+
+    def save(self, commit=False):
+        posts = self.instance
+        posts.title = self.cleaned_data['title']
+        posts.content = self.cleaned_data['content']
+
+        if self.cleaned_data['image']:
+            posts.image = self.cleaned_data['image']
+        if commit:
+            posts.save()
+        return posts
+
+    def __init__(self, *args, **kwargs):
+        super(UpdatePostForm, self).__init__(*args, **kwargs)
+        for field in (self.fields['title'], self.fields['content']):
+            field.widget.attrs.update({'class': 'form-control'})
+        self.fields['image'].widget.attrs.update({'class': 'form-control-file'})
+
+
 

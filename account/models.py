@@ -6,8 +6,7 @@ from django.utils.text import slugify
 
 
 def upload_location(instance, filename, *args, **kwargs):
-    file_path = 'post/{author_id}/{title}-{filename}'.format(author_id=str(instance.author.id),
-                                                             title=str(instance.title), filename=filename)
+    file_path = 'post/{author_id}/{title}-{filename}'.format(author_id=str(instance.author.id), title=str(instance.title), filename=filename)
     return file_path
 
 
@@ -76,7 +75,7 @@ class PostData(models.Model):
 
     def get_absolute_url(self):
         return reverse("post_detail", args=[self.created_at.year, self.created_at.month, self.created_at.day, self.slug])
-    
+
     def save(self, *args, **kwargs):
         self.slug = '-'.join((slugify(self.title), slugify(self.author)))
         super(PostData, self).save(*args, **kwargs)

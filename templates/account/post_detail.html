@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div>
+
+    <div class="card" style="width: 100%; margin: 15px;">
+        <div>
+
+            {%if item.image %}
+            <img src="{{ item.image.url }}" style="width:650px;height:350px;" class=" img-fluid"/>
+            {% endif %}
+
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ item.title }}</h5>
+            <p class="card-text">{{item.content}}</p>
+        </div>
+
+
+            {% if item.author == request.user and user.is_authenticated %}
+        <div>
+            <a href="{%url 'update_post' item.slug %}"
+               class="btn ">UPDATE</a>
+            <a href="{%url 'post_delete' item.slug %}"
+               class="btn ">DELETE</a>
+        </div>
+            {% endif %}
+
+
+
+</div>
+</div>
+{% endblock %}
