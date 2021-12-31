@@ -50,6 +50,7 @@ class UserData(AbstractUser):
     phone = models.CharField('phone number', validators=[phone_regex], max_length=17, unique=True )
     username = None
     name = models.CharField(max_length=50)
+    friends = models.ManyToManyField('UserData', blank=True)
 
     USERNAME_FIELD = 'phone'
     REQUIRED_FIELDS = ['name']
@@ -79,8 +80,16 @@ class PostData(models.Model):
     def save(self, *args, **kwargs):
         self.slug = '-'.join((slugify(self.title), slugify(self.author)))
         super(PostData, self).save(*args, **kwargs)
+    
+    class Meta:
+        ordering = ['-upload_at',]
 
+class FriendRequest(models.Model):
+    from_user = models.ForeignKey(UserData, related_name="from_user", on_delete=models.CASCADE)
+    to_user = models.ForeignKey(UserData, related_name="to_user", on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f"{self.from_user}-->{self.to_user}"
 
 
 

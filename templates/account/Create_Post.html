@@ -2,7 +2,8 @@
 
 {% block content %}
 
-<div style="padding-left: 100px; padding-right: 100px; padding-top: 100px;" >
+<div  class="card" style="padding-left: 50px; padding-right: 50px; padding-top: 40px; padding-bottom: 50px; border-width: 4px; margin-top: 40px;" >
+    <h2 style=" margin-bottom: 40px;"> Create New Post</h2>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}

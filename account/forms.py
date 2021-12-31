@@ -78,4 +78,5 @@ class UpdatePostForm(forms.ModelForm):
         self.fields['image'].widget.attrs.update({'class': 'form-control-file'})
 
 
-
+class SearchForm(forms.Form):
+    query = forms.CharField()

@@ -3,26 +3,26 @@
 
 <div>
 
-    <div class="card" style="width: 100%; margin: 15px;">
+    <div class="card" style="width: 50%; margin: 15px; border-radius: 8px;">
         <div>
 
             {%if item.image %}
-            <img src="{{ item.image.url }}" style="width:650px;height:350px;" class=" img-fluid"/>
+            <img src="{{ item.image.url }}" style="width:650px;height:350px; object-fit: cover;" class=" img-fluid"/>
             {% endif %}
 
         </div>
-        <div class="card-body">
-            <h5 class="card-title">{{ item.title }}</h5>
-            <p class="card-text">{{item.content}}</p>
+        <div class="card-body" style="background-color: black;">
+            <h5 class="card-title" style="color: blanchedalmond;">{{ item.title }}</h5>
+            <p class="card-text" style="color: blanchedalmond;">{{item.content}}</p>
         </div>
 
 
             {% if item.author == request.user and user.is_authenticated %}
-        <div>
+        <div class="card-body" style="background-color: black;">
             <a href="{%url 'update_post' item.slug %}"
-               class="btn ">UPDATE</a>
+               class="btn" style="color: rgb(17, 118, 201);">UPDATE</a>
             <a href="{%url 'post_delete' item.slug %}"
-               class="btn ">DELETE</a>
+               class="btn" style="color: red;">DELETE</a>
         </div>
             {% endif %}
 

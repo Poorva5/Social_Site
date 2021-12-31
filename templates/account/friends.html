@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block content %}
+
+   {% for i in friends %}
+       {{ i.name }}
+   {% endfor %}
+{% endblock %}
