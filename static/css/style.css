@@ -160,3 +160,33 @@ body {
     padding-right: 25rem;
     padding-left: 20rem;
 }
+
+.profile-page-image {
+    justify-content: center;
+    display: flex;
+}
+
+.follower-div {
+    display: flex;
+    justify-content: center;
+}
+
+.follower-count {
+    display: flex;
+    justify-content: center;
+}
+
+.profile-card {
+    width: 780px;
+    border-radius: 0 !important;
+}
+
+.profile-post-img {
+    width: 300px;
+    margin: 3px;
+
+}
+
+.div-post-flex {
+    display: flex;
+}

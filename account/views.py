@@ -57,33 +57,24 @@ def logout_view(request):
     return redirect("signup")
 
 
-# def profile_page(request, phone):
-#     context = {}
-#     obj = UserData.objects.filter(phone=phone)
-#     print(obj)
-#     obj = obj[0]
-#     context = {
-#         "obj": obj
-#     }
-#     return render(request, 'account/my_profile.html', context)
-
-
 class ProfileView(View):
     
     def get(self, request, phone, *args, **kwargs):
         profile = UserData.objects.get(phone=phone)
         followers = request.user.followers.all()
+        posts = PostData.objects.filter(author=profile).order_by('-created_at')
 
         is_following = False
-        if request.user in followers:
+        if profile.phone in followers:
             is_following = True
-            
-        number_of_followers = len(followers)
+
+        number_of_followers = (UserData.objects.get(phone=phone).followers).count
 
         context = {
             'profile' : profile,
             'is_following' : is_following,
-            'number_of_followers' : number_of_followers,
+            'posts': posts,
+            'number_of_followers' : number_of_followers
         }
         return render(request, 'account/my_profile.html', context)
 

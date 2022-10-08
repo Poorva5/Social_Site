@@ -4,12 +4,13 @@
 <div class="row justify-content-center mt-5">
     <div class="card col-md-8 col-sm-12 shadow-sm px-5 pt-3">
         {% if profile.image %}
-        <img src="{{ profile.image.url }}" class="rounded-circle" width="100" height="100" />
+        <div class="profile-page-image"><img src="{{ profile.image.url }}" class="rounded-circle" width="100"
+                height="100" /></div>
         {% endif %}
         {% if profile.name %}
-        <h3 class="py-4">{{ profile.name }}
+        <h3 class="py-4 justify-content-center" style="display:flex ;">{{ profile.name }}
             <span>
-                {% if request.user == user %}
+                {% if request.user.phone == profile.phone %}
                 <a href="" style="color: #333;"><i class="far fa-edit"></i></a>
                 {% endif %}
             </span>
@@ -21,7 +22,32 @@
             {% endif %}
         </div>
         <div class="mb-3">
-            <p>Followers: {{ number_of_followers }}</p>
+            <h5 class="follower-div">Followers</h5>
+            <h5 class="follower-count">{{ number_of_followers }}</h5>
+            {% if profile.phone == request.user.phone %}
+            {% else %}
+            {% if is_following %}
+            <form method="POST" action="{% url 'remove_follower' profile.phone %}">
+                {% csrf_token %}
+                <button class="btn btn-outline-danger" type=submit>UnFollow</button>
+            </form>
+            {% else %}
+            <form method="POST" action="{% url 'add_follower' profile.phone %}">
+                {% csrf_token %}
+                <button class="btn btn-outline-success" type=submit>Follow</button>
+            </form>
+            {% endif %}
+            {% endif %}
+        </div>
+
+        <div class="card profile-card">
+            {% for item in posts %}
+            <div class="div-post-flex">
+                {% if item.image %}
+                <img src="{{ item.image.url }}" class="profile-post-img" />
+                {% endif %}
+            </div>
+            {% endfor %}
         </div>
     </div>
 </div>
