@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="card detail-card">
+    <div class="d-flex author-sec">
+        {% if item.author.image %}
+        <img class="rounded-full profile-img" src="{{ item.author.image.url }}">
+        {% endif %}
+        <a><span class="author-name">{{item.author}}</span></a>
+    </div>
+    <div>
+        {%if item.image %}
+        <img src="{{ item.image.url }}" style="object-fit: cover" class="img-fluid" />
+        {% endif %}
+    </div>
+
+    <div class="card-body">
+        <p class="card-text">{{item.caption}}</p>
+    </div>
+
+
+    {% if item.author == request.user and user.is_authenticated %}
+    <div class="card-body">
+        <a href="{%url 'post_delete' item.slug %}" class="btn" style="color: red;">DELETE</a>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

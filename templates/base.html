@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}Landing Page{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Maven+Pro&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="{% url 'home' %}">Social</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                {% if not user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class=" nav-item">
+                    <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+                </li>
+                {% else %}
+                <li class=" nav-item ac">
+                    <a class="nav-link" href="{% url 'create_post' %}">Create New Post</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile_page' request.user.phone %}">My Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <section class="section-one"></section>
+
+    <section class="container">
+        {% block content %}
+
+        {% endblock %}
+    </section>
+
+
+    <!------- Section Two  --------->
+    <section class="container section-two">
+        <div>
+            {% for item in post_list %}
+            <div class="card">
+                <div class="d-flex author-sec">
+                    {% if item.author.image %}
+                    <img class="rounded-full profile-img" src="{{ item.author.image.url }}">
+                    {% endif %}
+                    <a class="author-name" href="{% url 'profile_page' item.author.phone %}">{{item.author}}</a>
+                </div>
+                <div>
+                    {% if item.image %}
+                    <img src="{{ item.image.url }}" class="post-img img-fluid" />
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <span class="author-name-down">{{item.author}}</span>
+                    <span class="card-title" style="color: black">{{ item.caption }}</span>
+                    <p class="created-at mt-2">{{item.created_at}}</p>
+                    <a href="{{ item.get_absolute_url}}" class="btn post-btn">View
+                        Post</a>
+                </div>
+
+                <div>
+                    <form action="{% url 'like_post' item.pk %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" name="post_id" value="{{ item.id }}" class="btn"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                class="bi bi-heart" viewBox="0 0 16 16">
+                                <path
+                                    d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+                            </svg></button> <span>{{item.user_like.count }}</span>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="section-three">
+
+    </section>
+
+</body>
+
+</html>

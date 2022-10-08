@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="card add-post">
+    <h2 style=" margin-bottom: 40px;"> Create New Post</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn post-btn">Create</button>
+    </form>
+</div>
+
+{% endblock %}
