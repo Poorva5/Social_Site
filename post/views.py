@@ -64,9 +64,8 @@ def post_list(request):
     context = {}
     if request.GET:
         query = request.GET.get('q', '')
-        print(query)
         context['query'] = str(query)
-    obj = sorted(get_blog_queryset(query), reverse=True)
+    obj = sorted(query, key=get_blog_queryset)
     context['obj'] = obj
 
     return render(request, "base.html", context)
