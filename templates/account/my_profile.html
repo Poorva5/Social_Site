@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="row justify-content-center mt-5">
+<div class="row justify-content-center mt-5 profile-main">
     <div class="card col-md-8 col-sm-12 shadow-sm px-5 pt-3">
         {% if profile.image %}
         <div class="profile-page-image"><img src="{{ profile.image.url }}" class="rounded-circle" width="100"
@@ -41,13 +41,13 @@
         </div>
 
         <div class="card profile-card">
-            {% for item in posts %}
-            <div class="div-post-flex">
+            <div class="div-post-flex d-flex">
+                {% for item in posts %}
                 {% if item.image %}
-                <img src="{{ item.image.url }}" class="profile-post-img" />
+                <img src="{{ item.image.url }}" class="profile-post-img img-fluid" />
                 {% endif %}
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </div>
 </div>

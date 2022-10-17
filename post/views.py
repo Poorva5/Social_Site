@@ -13,7 +13,7 @@ from django.http import HttpResponseRedirect
 def home(request):
     context = {}
     data = PostData.objects.all()
-    context['post_list'] = data
+    context['posts'] = data
     return render(request, "base.html", context)
 
 

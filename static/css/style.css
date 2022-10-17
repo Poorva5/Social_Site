@@ -182,11 +182,18 @@ body {
 }
 
 .profile-post-img {
-    width: 300px;
+    width: 250px;
     margin: 3px;
+    height: 200px !important;
 
 }
 
 .div-post-flex {
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.profile-main {
+    height: 60rem;
 }
