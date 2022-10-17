@@ -51,8 +51,7 @@ def get_blog_queryset(query=None):
     queries = query.split(" ")
     for q in queries:
         posts = PostData.objects.filter(
-            Q(title__icontains=q) |
-            Q(content__icontains=q)
+            Q(caption__icontains=q)
         ).distinct()
         for post in posts:
             queryset.append(post)
